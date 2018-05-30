@@ -1,0 +1,60 @@
+public int countFreq(int[] a, int k){
+int n = a.length;
+if(n == 0)
+return 0;
+int l = 0, h = n - 1;
+while(l <= h){
+int mid = l + (h - l)/2;
+if(a[mid] < k)
+l = mid + 1;
+else
+h = mid - 1;
+}
+int start = h;
+
+l = 0; 
+h = n - 1;
+
+while(l <= h){
+int mid = l + (h - l)/2;
+if(a[mid] <= k)
+l = mid + 1;
+else
+h = mid - 1;
+}
+int end = h;
+return end - start;
+}
+
+
+void utility(const vector<int>&a,int elt,int low,int high,int*count)
+{
+if(low<=high)
+{
+int mid=(low+high)/2;
+if(a[mid]==elt)
+{
+*count=*count+1;
+//printf("%d ",count);
+utility(a,elt,low,mid-1,count);
+utility(a,elt,mid+1,high,count);
+}
+else if(a[mid]>elt)
+{
+utility(a,elt,low,mid-1,count);
+}
+else
+{
+utility(a,elt,mid+1,high,count);
+
+}
+}
+}
+int Solution::findCount(const vector<int> &A, int B)
+{
+int count=0;
+int n=sizeof(A);
+utility(A,B,0,n-1,&count);
+return count;
+
+}
